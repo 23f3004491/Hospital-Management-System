@@ -1,0 +1,3 @@
+SECRET_KEY = '9d5b41da23c1acbfaba2ea121cef2395'
+SQLALCHEMY_DATABASE_URI = 'sqlite:///hospital.db'
+SQLALCHEMY_TRACK_MODIFICATIONS = False
