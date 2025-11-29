@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Hospital Management System{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4">Welcome to Hospital Management System</h1>
+        <p class="lead">Manage your healthcare efficiently</p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 text-center shadow">
+                <div class="card-body">
+                    <h3 class="card-title text-primary">For Patients</h3>
+                    <p class="card-text">Book appointments, view medical history, and manage your healthcare.</p>
+                    <a href="{{ url_for('register') }}" class="btn btn-primary">Register Now</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 text-center shadow">
+                <div class="card-body">
+                    <h3 class="card-title text-success">For Doctors</h3>
+                    <p class="card-text">Manage appointments, update patient records, and set availability.</p>
+                    <a href="{{ url_for('login') }}" class="btn btn-success">Doctor Login</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 text-center shadow">
+                <div class="card-body">
+                    <h3 class="card-title text-danger">For Admins</h3>
+                    <p class="card-text">Manage doctors, patients, and oversee all hospital operations.</p>
+                    <a href="{{ url_for('login') }}" class="btn btn-danger">Admin Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
