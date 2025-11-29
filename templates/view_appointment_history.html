@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block title %}Appointment History{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Appointment Details</h2>
+        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Appointment Info</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <tr>
+                            <th style="width: 30%">Date:</th>
+                            <td>{{ appointment.date.strftime('%Y-%m-%d') }}</td>
+                        </tr>
+                        <tr>
+                            <th>Time Slot:</th>
+                            <td>{{ appointment.time_slot }}</td>
+                        </tr>
+                        <tr>
+                            <th>Status:</th>
+                            <td>
+                                {% if appointment.status == 'Completed' %}
+                                <span class="badge bg-success">Completed</span>
+                                {% elif appointment.status == 'Cancelled' %}
+                                <span class="badge bg-danger">Cancelled</span>
+                                {% else %}
+                                <span class="badge bg-warning">Booked</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">Participants</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <tr>
+                            <th style="width: 30%">Doctor:</th>
+                            <td>Dr. {{ appointment.doctor.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Department:</th>
+                            <td>{{ appointment.doctor.department.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Patient:</th>
+                            <td>{{ appointment.patient.name }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if treatment %}
+    <div class="card">
+        <div class="card-header bg-success text-white">
+            <h5 class="mb-0">Treatment Record</h5>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <h6 class="fw-bold">Diagnosis</h6>
+                    <p class="p-3 bg-light rounded">{{ treatment.diagnosis }}</p>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <h6 class="fw-bold">Prescription</h6>
+                    <p class="p-3 bg-light rounded">{{ treatment.prescription }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h6 class="fw-bold">Notes</h6>
+                    <p class="p-3 bg-light rounded">{{ treatment.notes or 'No additional notes.' }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="alert alert-info">
+        No treatment record available for this appointment.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

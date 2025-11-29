@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Patient Profile - HMS{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-light fw-bold">Update Profile</div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Name</label>
+                        <input type="text" class="form-control" name="name" value="{{ patient.name }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Age</label>
+                        <input type="number" class="form-control" name="age" value="{{ patient.age or '' }}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Gender</label>
+                        <select class="form-control" name="gender">
+                            <option value="">Select</option>
+                            <option value="Male" {% if patient.gender == 'Male' %}selected{% endif %}>Male</option>
+                            <option value="Female" {% if patient.gender == 'Female' %}selected{% endif %}>Female</option>
+                            <option value="Other" {% if patient.gender == 'Other' %}selected{% endif %}>Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Contact</label>
+                        <input type="text" class="form-control" name="contact" value="{{ patient.contact or '' }}">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Address</label>
+                        <textarea class="form-control" name="address" rows="3">{{ patient.address or '' }}</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary fw-bold">Update Profile</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

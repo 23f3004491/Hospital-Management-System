@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}Book Appointment{% endblock %}
+
+{% block content %}
+<h2><i class="bi bi-calendar-plus"></i> Book an Appointment</h2>
+<hr>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="department" class="form-label">Department</label>
+                        <select class="form-select" id="department" onchange="loadDoctors()" required>
+                            <option value="">Select Department</option>
+                            {% for dept in departments %}
+                                <option value="{{ dept.id }}">{{ dept.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="doctor_id" class="form-label">Doctor</label>
+                        <select class="form-select" id="doctor_id" name="doctor_id" required>
+                            <option value="">Select Department First</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="appointment_date" class="form-label">Appointment Date</label>
+                        <input type="date" class="form-control" id="appointment_date" name="appointment_date" 
+                               min="{{ (None or '').today().strftime('%Y-%m-%d') if None else '' }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="time_slot" class="form-label">Time Slot</label>
+                        <select class="form-select" id="time_slot" name="time_slot" required>
+                            <option value="">Select Time Slot</option>
+                            <option value="09:00 AM - 10:00 AM">09:00 AM - 10:00 AM</option>
+                            <option value="10:00 AM - 11:00 AM">10:00 AM - 11:00 AM</option>
+                            <option value="11:00 AM - 12:00 PM">11:00 AM - 12:00 PM</option>
+                            <option value="12:00 PM - 01:00 PM">12:00 PM - 01:00 PM</option>
+                            <option value="02:00 PM - 03:00 PM">02:00 PM - 03:00 PM</option>
+                            <option value="03:00 PM - 04:00 PM">03:00 PM - 04:00 PM</option>
+                            <option value="04:00 PM - 05:00 PM">04:00 PM - 05:00 PM</option>
+                            <option value="05:00 PM - 06:00 PM">05:00 PM - 06:00 PM</option>
+                        </select>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-circle"></i> Book Appointment
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card bg-light">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-info-circle"></i> Instructions</h5>
+                <ul>
+                    <li>Select a department</li>
+                    <li>Choose your preferred doctor</li>
+                    <li>Pick a suitable date and time</li>
+                    <li>Confirm your appointment</li>
+                </ul>
+                <p class="text-muted small">Please arrive 15 minutes before your scheduled time.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Set minimum date to today
+    document.getElementById('appointment_date').min = new Date().toISOString().split('T')[0];
+
+    function loadDoctors() {
+        const deptId = document.getElementById('department').value;
+        const doctorSelect = document.getElementById('doctor_id');
+        
+        doctorSelect.innerHTML = '<option value="">Loading...</option>';
+        
+        if (!deptId) {
+            doctorSelect.innerHTML = '<option value="">Select Department First</option>';
+            return;
+        }
+
+        // In a real application, you would fetch doctors via AJAX
+        // For now, we'll use the departments data from the template
+        const departments = {{ departments | tojson }};
+        const dept = departments.find(d => d.id == deptId);
+        
+        if (dept && dept.doctors && dept.doctors.length > 0) {
+            doctorSelect.innerHTML = '<option value="">Select Doctor</option>';
+            dept.doctors.forEach(doctor => {
+                const option = document.createElement('option');
+                option.value = doctor.id;
+                option.textContent = `Dr. ${doctor.name} (${doctor.specialization})`;
+                doctorSelect.appendChild(option);
+            });
+        } else {
+            doctorSelect.innerHTML = '<option value="">No doctors available</option>';
+        }
+    }
+</script>
+{% endblock %}
