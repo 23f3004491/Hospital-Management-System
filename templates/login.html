@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Login - HMS{% endblock %}
+
+{% block content %}
+<div class="min-vh-100 d-flex align-items-center justify-content-center bg-light">
+    <div class="w-100" style="max-width: 450px;">
+        <div class="card shadow-lg border-0">
+            <div class="card-body p-5">
+                <h2 class="text-center mb-4 fw-bold">Welcome Back</h2>
+
+                <!-- Flash Messages -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                        <div class="alert alert-{{ 'danger' if category == 'danger' else 'warning' if category == 'warning' else 'success' if category == 'success' else 'info' }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <form method="POST" action="{{ url_for('login') }}" novalidate>
+                    <!-- Email Field -->
+                    <div class="mb-4">
+                        <label for="email" class="form-label fw-500">Email Address</label>
+                        <input type="email" class="form-control form-control-lg" id="email" name="email" 
+                               placeholder="Enter your email" required autofocus>
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="mb-4">
+                        <label for="password" class="form-label fw-500">Password</label>
+                        <input type="password" class="form-control form-control-lg" id="password" name="password" 
+                               placeholder="Enter your password" required>
+                    </div>
+
+                    <!-- Login Button -->
+                    <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold mb-3">Login</button>
+                </form>
+
+                <hr class="my-4">
+
+                <!-- Register Link -->
+                <div class="text-center">
+                    <p class="text-muted mb-0">
+                        Don't have an account? 
+                        <a href="{{ url_for('register') }}" class="fw-bold text-decoration-none">Register here</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-4">
+            <p class="text-muted small">
+                <a href="{{ url_for('home') }}" class="text-decoration-none">Back to Home</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

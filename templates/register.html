@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="min-vh-100 d-flex align-items-center justify-content-center bg-light">
+    <div class="w-100" style="max-width: 450px;">
+        <div class="card shadow-lg border-0">
+            <div class="card-body p-5">
+                <h2 class="text-center mb-4 fw-bold">Create Account</h2>
+
+                <!-- Flash Messages -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                        <div class="alert alert-{{ 'danger' if category == 'danger' else 'warning' if category == 'warning' else 'success' if category == 'success' else 'info' }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <form method="POST" novalidate>
+                    <!-- Name Field -->
+                    <div class="mb-4">
+                        <label for="name" class="form-label fw-500">Full Name</label>
+                        <input type="text" class="form-control form-control-lg" id="name" name="name" 
+                               placeholder="Enter your full name" required>
+                    </div>
+
+                    <!-- Email Field -->
+                    <div class="mb-4">
+                        <label for="email" class="form-label fw-500">Email Address</label>
+                        <input type="email" class="form-control form-control-lg" id="email" name="email" 
+                               placeholder="Enter your email" required>
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="mb-4">
+                        <label for="password" class="form-label fw-500">Password</label>
+                        <input type="password" class="form-control form-control-lg" id="password" name="password" 
+                               placeholder="Enter your password" required>
+                    </div>
+
+                    <!-- Register Button -->
+                    <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold mb-3">Register</button>
+                </form>
+
+                <hr class="my-4">
+
+                <!-- Login Link -->
+                <div class="text-center">
+                    <p class="text-muted mb-0">
+                        Already have an account? 
+                        <a href="{{ url_for('login') }}" class="fw-bold text-decoration-none">Login here</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-4">
+            <p class="text-muted small">
+                <a href="{{ url_for('home') }}" class="text-decoration-none">Back to Home</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
