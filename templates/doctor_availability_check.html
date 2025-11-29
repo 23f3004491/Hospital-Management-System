@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Availability - Dr. {{ doctor.name }}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2>Availability: Dr. {{ doctor.name }}</h2>
+            <p class="text-muted">Department: {{ doctor.department.name }}</p>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="{{ url_for('doctor_details', doc_id=doctor.id) }}" class="btn btn-success">Book Appointment</a>
+            <a href="javascript:history.back()" class="btn btn-secondary">Back</a>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Schedule for Next 7 Days</h5>
+        </div>
+        <div class="card-body">
+            {% if availability %}
+            <div class="row g-3">
+                {% for avail in availability %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 border-primary">
+                        <div class="card-header bg-light text-center">
+                            <strong>{{ avail.date.strftime('%A, %b %d') }}</strong>
+                        </div>
+                        <div class="card-body">
+                            {% if avail.morning_slot %}
+                            <div class="mb-2">
+                                <span class="badge bg-info text-dark">Morning</span>
+                                <p class="small mb-0">{{ avail.morning_slot }}</p>
+                            </div>
+                            {% endif %}
+
+                            {% if avail.afternoon_slot %}
+                            <div class="mb-2">
+                                <span class="badge bg-warning text-dark">Afternoon</span>
+                                <p class="small mb-0">{{ avail.afternoon_slot }}</p>
+                            </div>
+                            {% endif %}
+
+                            {% if avail.evening_slot %}
+                            <div class="mb-0">
+                                <span class="badge bg-dark">Evening</span>
+                                <p class="small mb-0">{{ avail.evening_slot }}</p>
+                            </div>
+                            {% endif %}
+
+                            {% if not (avail.morning_slot or avail.afternoon_slot or avail.evening_slot) %}
+                            <p class="text-muted text-center mb-0">No slots available</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="alert alert-info text-center">
+                <p class="mb-0">No availability schedule found for the next 7 days.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Availability{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Manage Availability</h2>
+        <a href="{{ url_for('doctor_dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Set Your Availability (Next 7 Days)</h5>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                {% for i in range(7) %}
+                    {% set current_date = today + timedelta(days=i) %}
+                    <div class="card mb-3">
+                        <div class="card-header bg-light">
+                            <h6 class="mb-0">{{ current_date.strftime('%A, %B %d, %Y') }}</h6>
+                            <input type="hidden" name="date_{{ i }}" value="{{ current_date.strftime('%Y-%m-%d') }}">
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Morning (9am-12pm)</label>
+                                    <input type="text" name="morning_{{ i }}" class="form-control" 
+                                           placeholder="e.g., 9am-10am, 10am-11am, 11am-12pm">
+                                    <small class="text-muted">Comma-separated time slots</small>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Afternoon (1pm-4pm)</label>
+                                    <input type="text" name="afternoon_{{ i }}" class="form-control" 
+                                           placeholder="e.g., 1pm-2pm, 2pm-3pm, 3pm-4pm">
+                                    <small class="text-muted">Comma-separated time slots</small>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Evening (5pm-8pm)</label>
+                                    <input type="text" name="evening_{{ i }}" class="form-control" 
+                                           placeholder="e.g., 5pm-6pm, 6pm-7pm, 7pm-8pm">
+                                    <small class="text-muted">Comma-separated time slots</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                
+                <button type="submit" class="btn btn-primary btn-lg w-100">Save Availability</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header bg-info text-white">
+            <h5 class="mb-0">Current Saved Availability</h5>
+        </div>
+        <div class="card-body">
+            {% if saved_availability %}
+                {% for avail in saved_availability %}
+                <div class="card mb-3">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <strong>{{ avail.date.strftime('%A, %B %d, %Y') }}</strong>
+                        <form method="POST" action="{{ url_for('delete_availability', avail_id=avail.id) }}" style="display:inline;">
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete this availability?')">Delete</button>
+                        </form>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            {% if avail.morning_slot %}
+                            <div class="col-md-4">
+                                <h6 class="text-muted">Morning</h6>
+                                <p>{{ avail.morning_slot }}</p>
+                            </div>
+                            {% endif %}
+                            {% if avail.afternoon_slot %}
+                            <div class="col-md-4">
+                                <h6 class="text-muted">Afternoon</h6>
+                                <p>{{ avail.afternoon_slot }}</p>
+                            </div>
+                            {% endif %}
+                            {% if avail.evening_slot %}
+                            <div class="col-md-4">
+                                <h6 class="text-muted">Evening</h6>
+                                <p>{{ avail.evening_slot }}</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+            <p class="text-muted mb-0">No availability set yet.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

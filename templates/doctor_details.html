@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block title %}Dr. {{ doctor.name }}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4 class="card-title">Dr. {{ doctor.name }}</h4>
+                    <p class="text-muted">
+                        {% if doctor.department %}
+                            {{ doctor.department.name }}
+                        {% endif %}
+                    </p>
+                    
+                    {% if doctor.experience_years %}
+                    <p><strong>Experience:</strong> {{ doctor.experience_years }} years</p>
+                    {% endif %}
+                    
+                    {% if doctor.bio %}
+                    <div class="mt-3">
+                        <h6>Bio</h6>
+                        <p class="small">{{ doctor.bio }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <a href="javascript:history.back()" class="btn btn-secondary w-100">Back</a>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Book an Appointment</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-3">Select an available time slot below.</p>
+
+                    {% if availability %}
+                    <form method="POST" action="{{ url_for('book_appointment') }}">
+                        <input type="hidden" name="doctor_id" value="{{ doctor.id }}">
+                        <input type="hidden" id="selectedDate" name="date" value="">
+                        
+                        <div class="mb-4">
+                            <h6>Availability for the next 7 days</h6>
+                            
+                            {% for avail in availability %}
+                            <div class="mb-4 p-3 border rounded">
+                                <h6 class="mb-3">
+                                    <strong>{{ avail.date.strftime('%A, %B %d, %Y') }}</strong>
+                                </h6>
+
+                                {% set dateKey = avail.date.strftime('%Y%m%d') %}
+
+                                {% if avail.morning_slot %}
+                                <div class="mb-3">
+                                    <label class="form-label">Morning (9am-12pm)</label>
+                                    <div class="d-flex flex-wrap gap-2">
+                                        {% for slot in avail.morning_slot.split(',') %}
+                                            {% if slot.strip() %}
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="time_slot" 
+                                                       id="slot_{{ dateKey }}_m{{ loop.index }}" 
+                                                       value="{{ slot.strip() }}" 
+                                                       onchange="document.getElementById('selectedDate').value = '{{ avail.date.strftime('%Y-%m-%d') }}'">
+                                                <label class="form-check-label" for="slot_{{ dateKey }}_m{{ loop.index }}">
+                                                    {{ slot.strip() }}
+                                                </label>
+                                            </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                {% if avail.afternoon_slot %}
+                                <div class="mb-3">
+                                    <label class="form-label">Afternoon (1pm-4pm)</label>
+                                    <div class="d-flex flex-wrap gap-2">
+                                        {% for slot in avail.afternoon_slot.split(',') %}
+                                            {% if slot.strip() %}
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="time_slot" 
+                                                       id="slot_{{ dateKey }}_a{{ loop.index }}" 
+                                                       value="{{ slot.strip() }}" 
+                                                       onchange="document.getElementById('selectedDate').value = '{{ avail.date.strftime('%Y-%m-%d') }}'">
+                                                <label class="form-check-label" for="slot_{{ dateKey }}_a{{ loop.index }}">
+                                                    {{ slot.strip() }}
+                                                </label>
+                                            </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                {% if avail.evening_slot %}
+                                <div class="mb-3">
+                                    <label class="form-label">Evening (5pm-8pm)</label>
+                                    <div class="d-flex flex-wrap gap-2">
+                                        {% for slot in avail.evening_slot.split(',') %}
+                                            {% if slot.strip() %}
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="time_slot" 
+                                                       id="slot_{{ dateKey }}_e{{ loop.index }}" 
+                                                       value="{{ slot.strip() }}" 
+                                                       onchange="document.getElementById('selectedDate').value = '{{ avail.date.strftime('%Y-%m-%d') }}'">
+                                                <label class="form-check-label" for="slot_{{ dateKey }}_e{{ loop.index }}">
+                                                    {{ slot.strip() }}
+                                                </label>
+                                            </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                        </div>
+                        
+                        <button type="submit" class="btn btn-success btn-lg w-100">Book Appointment</button>
+                    </form>
+                    {% else %}
+                    <div class="alert alert-info mb-0">
+                        <p class="mb-0">No availability set for the next 7 days. Please check back later or contact the doctor's office.</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
