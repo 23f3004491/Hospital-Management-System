@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Departments{% endblock %}
+
+{% block content %}
+<h2><i class="bi bi-building"></i> Departments</h2>
+<hr>
+
+<div class="row">
+    {% for dept in departments %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">{{ dept.name }}</h5>
+                <p class="card-text">{{ dept.description or 'No description available.' }}</p>
+                <a href="{{ url_for('department_details', dept_id=dept.id) }}" class="btn btn-primary">
+                    <i class="bi bi-eye"></i> View Details
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% if not departments %}
+    <div class="alert alert-info">
+        <i class="bi bi-info-circle"></i> No departments available.
+    </div>
+{% endif %}
+{% endblock %}
