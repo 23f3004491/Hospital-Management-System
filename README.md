@@ -314,10 +314,10 @@ Hospital Management System_1/
 
 ## 👨‍💻 Author
 
-- **Name:** [Your Name]
-- **Roll Number:** [Your Roll Number]
-- **Email:** [Your Email]
-- **Institution:** [Your Institution]
+- **Name:** Tarun Gangwar
+- **Roll Number:** 23f3004491
+- **Email:** 23f3004491@ds.study.iitm.ac.in
+- **Institution:** Indian Institute of Technology Madras 
 
 ---
 
@@ -336,3 +336,4 @@ This project is created for educational purposes.
 ---
 
 Video Explanation - https://drive.google.com/file/d/1uGWhQON6PaMx90wtVO91IU7MJc-djGrg/view?usp=sharing
+
