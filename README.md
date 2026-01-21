@@ -1,10 +1,10 @@
-# 🏥 Hospital Management System
+# Hospital Management System
 
 A comprehensive web-based Hospital Management System built with Flask, enabling efficient management of hospital operations including doctors, patients, appointments, and treatments.
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Features](#features)
 - [Technologies Used](#technologies-used)
@@ -19,30 +19,30 @@ A comprehensive web-based Hospital Management System built with Flask, enabling 
 
 ---
 
-## ✨ Features
+## Features
 
-### 👨‍💼 Admin Dashboard
+### Admin Dashboard
 - Manage doctors (add, edit, delete, blacklist)
 - Manage patients (edit, delete, blacklist)
 - Manage departments
 - View all appointments and treatment history
 - System-wide statistics and overview
 
-### 👨‍⚕️ Doctor Dashboard
+### Doctor Dashboard
 - View assigned appointments
 - Manage availability (morning, afternoon, evening slots)
 - Update patient treatment records
 - View patient medical history
 - Complete patient visits with diagnosis and prescription
 
-### 👤 Patient Dashboard
+### Patient Dashboard
 - Search doctors by department
 - Book appointments based on doctor availability
 - View appointment history
 - View medical history and treatments
 - Manage profile information
 
-### 🔐 Authentication
+### Authentication
 - Secure login and registration
 - Role-based access control (Admin, Doctor, Patient)
 - Session management
@@ -50,7 +50,7 @@ A comprehensive web-based Hospital Management System built with Flask, enabling 
 
 ---
 
-## 🛠️ Technologies Used
+## Technologies Used
 
 | Technology | Purpose |
 |------------|---------|
@@ -64,7 +64,7 @@ A comprehensive web-based Hospital Management System built with Flask, enabling 
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Hospital Management System_1/
@@ -112,7 +112,7 @@ Hospital Management System_1/
 
 ---
 
-## 🚀 Installation
+## Installation
 
 ### Prerequisites
 - Python 3.8 or higher
@@ -160,7 +160,7 @@ Hospital Management System_1/
 
 ---
 
-## 💻 Usage
+## Usage
 
 ### For Admin
 1. Login with admin credentials
@@ -183,7 +183,7 @@ Hospital Management System_1/
 
 ---
 
-## 🔑 Default Credentials
+## Default Credentials
 
 | Role | Email | Password |
 |------|-------|----------|
@@ -191,7 +191,7 @@ Hospital Management System_1/
 
 ---
 
-## 🗄️ Database Schema
+## Database Schema
 
 ### User
 | Field | Type | Constraints |
@@ -265,7 +265,7 @@ Hospital Management System_1/
 
 ---
 
-## 🔗 API Endpoints
+## API Endpoints
 
 ### Authentication
 | Method | Endpoint | Description |
@@ -305,13 +305,6 @@ Hospital Management System_1/
 | GET | `/patient/appointments` | View appointments |
 
 ---
-
-## 📸 Screenshots
-
-> Add screenshots of your application here
-
----
-
 ## 👨‍💻 Author
 
 - **Name:** Tarun Gangwar
@@ -336,4 +329,5 @@ This project is created for educational purposes.
 ---
 
 Video Explanation - https://drive.google.com/file/d/1uGWhQON6PaMx90wtVO91IU7MJc-djGrg/view?usp=sharing
+
 
